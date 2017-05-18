@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 // import { tttApp } from './reducers'
-import App from './App';
+import App from './App.js';
+import app from './reducers/index';
 import './index.css';
 
-let store = createStore();
+
+let store = createStore(app);
 
 ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,
-
     document.getElementById('root')
 );
