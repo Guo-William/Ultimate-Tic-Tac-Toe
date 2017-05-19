@@ -13,13 +13,28 @@ ol, ul {
   display: table;
 }
 
+.game-layout {
+    float: left;
+    border-color: inherit;
+}
+
+.board-row {
+    border-color: inherit;
+}
+
+.board-border {
+    border: 5px solid;
+    border-color: inherit;
+}
+
 .status {
   margin-bottom: 10px;
 }
 
 .square {
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid;
+  border-color: inherit;
   float: left;
   font-size: 24px;
   font-weight: bold;
@@ -47,4 +62,12 @@ ol, ul {
 
 .game-info {
   margin-left: 20px;
+}
+
+.game-board-red {
+    border-color: #ff0000;
+}
+
+.game-board-blue {
+    border-color: #00ff00;
 }
