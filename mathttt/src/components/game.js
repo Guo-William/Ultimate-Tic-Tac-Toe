@@ -4,61 +4,83 @@ import { Board } from './Board';
 
 export class Game extends React.Component {
     render() {
-        const history = this.props.history;
-        const current = history[this.props.stepNumber];
-        let color = '';
+        const current = this.props.history[this.props.stepNumber];
+        const currentSquaresSet = current.squaresSet;
         let status;
-        if (this.props.winner) {
-            status = 'Winner: ' + this.props.winner;
-            color = this.props.winner === 'X' ? 'game-board-red' : 'game-board-blue';
+        if (this.props.finished === 'X' || this.props.finished === 'O') {
+            status = 'Winner: ' + this.props.finished;
         }
         else {
             status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
         }
-
         return (
             <div className='game'>
-                <div className={color}>
-                    <div className='game-layout'>
+                <div className='game-layout'>
+                    <div className={`game-board-${this.props.winner[0]}`}>
                         <Board
-                            squares={current.squares}
+                            squares={currentSquaresSet[0]}
                             onClick={this.props.handleClick}
-                        />
-                        <Board
-                            squares={current.squares}
-                            onClick={this.props.handleClick}
-                        />
-                        <Board
-                            squares={current.squares}
-                            onClick={this.props.handleClick}
+                            quadrant={0}
                         />
                     </div>
-                    <div className='game-layout'>
+                    <div className={`game-board-${this.props.winner[3]}`}>
                         <Board
-                            squares={current.squares}
+                            squares={currentSquaresSet[3]}
                             onClick={this.props.handleClick}
-                        />
-                        <Board
-                            squares={current.squares}
-                            onClick={this.props.handleClick}
-                        />
-                        <Board
-                            squares={current.squares}
-                            onClick={this.props.handleClick}
+                            quadrant={3}
                         />
                     </div>
-                    <div className='game-layout'>
+                    <div className={`game-board-${this.props.winner[6]}`}>
                         <Board
-                            squares={current.squares}
+                            squares={currentSquaresSet[6]}
                             onClick={this.props.handleClick}
+                            quadrant={6}
                         />
+                    </div>
+                </div>
+                <div className='game-layout'>
+                    <div className={`game-board-${this.props.winner[1]}`}>
                         <Board
-                            squares={current.squares}
+                            squares={currentSquaresSet[1]}
                             onClick={this.props.handleClick}
+                            quadrant={1}
                         />
+                    </div>
+                    <div className={`game-board-${this.props.winner[4]}`}>
                         <Board
-                            squares={current.squares}
+                            squares={currentSquaresSet[4]}
                             onClick={this.props.handleClick}
+                            quadrant={4}
+                        />
+                    </div>
+                    <div className={`game-board-${this.props.winner[7]}`}>
+                        <Board
+                            squares={currentSquaresSet[7]}
+                            onClick={this.props.handleClick}
+                            quadrant={7}
+                        />
+                    </div>
+                </div>
+                <div className='game-layout'>
+                    <div className={`game-board-${this.props.winner[2]}`}>
+                        <Board
+                            squares={currentSquaresSet[2]}
+                            onClick={this.props.handleClick}
+                            quadrant={2}
+                        />
+                    </div>
+                    <div className={`game-board-${this.props.winner[5]}`}>
+                        <Board
+                            squares={currentSquaresSet[5]}
+                            onClick={this.props.handleClick}
+                            quadrant={5}
+                        />
+                    </div>
+                    <div className={`game-board-${this.props.winner[8]}`}>
+                        <Board
+                            squares={currentSquaresSet[8]}
+                            onClick={this.props.handleClick}
+                            quadrant={8}
                         />
                     </div>
                 </div>
@@ -72,14 +94,15 @@ export class Game extends React.Component {
 
 Game.propTypes = {
     history: PropTypes.arrayOf(PropTypes.shape({
-        squares: PropTypes.array.isRequired
+        squaresSet: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
     })).isRequired,
     stepNumber: PropTypes.number.isRequired,
     xIsNext: PropTypes.bool.isRequired,
+    winner: PropTypes.arrayOf(PropTypes.string).isRequired,
     handleClick: PropTypes.func.isRequired,
-    winner: PropTypes.oneOfType([
-        PropTypes.string,
+    currentSector: PropTypes.number.isRequired,
+    finished: PropTypes.oneOfType([
+        PropTypes.bool,
         PropTypes.object
     ])
-
 };

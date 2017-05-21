@@ -64,10 +64,14 @@ ol, ul {
   margin-left: 20px;
 }
 
-.game-board-red {
+.game-board-X {
     border-color: #ff0000;
 }
 
-.game-board-blue {
+.game-board-O {
     border-color: #00ff00;
+}
+
+.game-board-current {
+    border-color: #0000ff;
 }

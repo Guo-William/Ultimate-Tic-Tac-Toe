@@ -6,14 +6,16 @@ const mapStateToProps = (state) => {
         history: state.history,
         stepNumber: state.stepNumber,
         xIsNext: state.xIsNext,
-        winner: state.winner
+        winner: state.winner,
+        currentSector: state.currentSector,
+        finished: state.finished
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleClick: (i) => {
-            dispatch(mark(i));
+        handleClick: (quadrant, i) => {
+            dispatch(mark(quadrant, i));
         }
     };
 };
