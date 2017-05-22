@@ -72,6 +72,10 @@ ol, ul {
     border-color: #00ff00;
 }
 
+.game-board-T {
+    border-color: #ffffff;
+}
+
 .game-board-current {
     border-color: #0000ff;
 }

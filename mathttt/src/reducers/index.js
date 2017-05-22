@@ -21,8 +21,7 @@ function mark(state, action) {
     let currentSquares = currentSquaresSet[action.quadrant];
 
     const canMark = (state.currentSector !== 10 && state.currentSector !== action.quadrant);
-
-    if (currentSquares[action.i] || state.winner[action.quadrant] || canMark || state.finished) {
+    if (currentSquares[action.i] || state.winner[action.quadrant] || state.finished || canMark) {
         return state;
     }
 
@@ -64,10 +63,21 @@ function calculateWinner(squares) {
     ];
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] !== '' && squares[a] === squares[b] && squares[a] === squares[c]) {
+        const validFilling = squares[a] !== '' && squares[a] !== 'T';
+        if (squares[a] && validFilling && squares[a] === squares[b] && squares[a] === squares[c]) {
             return squares[a];
         }
     }
+
+    let filled = true;
+    for (let cs = 0; cs < squares.length; cs++ ) {
+        filled = filled && squares[cs];
+    }
+
+    if (filled) {
+        return 'T';
+    }
+
     return '';
 }
 
