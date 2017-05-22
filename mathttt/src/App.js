@@ -1,15 +1,12 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { Square } from './components/square';
-import { GameContainer } from './containers/gameContainer';
 import './App.css';
+import { GameContainer } from './containers/GameContainer';
 
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <GameContainer/>
-            </div>
+                <GameContainer/ >
         );
     }
 }

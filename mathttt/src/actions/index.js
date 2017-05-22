@@ -1,9 +1,7 @@
-import * as actions from '../constants/actionTypes.js';
-
-export const mark = (i, squareStates, xIsNext) => ({
-    type: actions.MARK,
-    i: i,
-    squareStates: squareStates,
-    xIsNext: xIsNext
-
-});
+export const mark = (quadrant, i) => {
+    return {
+        type: 'MARK',
+        quadrant: quadrant,
+        i: i
+    };
+};

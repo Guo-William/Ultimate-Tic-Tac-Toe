@@ -6,6 +6,11 @@ import { createStore } from 'redux';
 import App from './App.js';
 import app from './reducers/index';
 import './index.css';
+import { createStore } from 'redux';
+import { app } from './reducers/index';
+import { Provider } from 'react-redux';
+
+let store = createStore(app);
 
 
 let store = createStore(app);
