@@ -8,86 +8,43 @@ export class Game extends React.Component {
         const currentSquaresSet = current.squaresSet;
         let status;
         let tied = true;
+        let columns = [];
+
         if (this.props.finished === 'X' || this.props.finished === 'O') {
             status = 'Winner: ' + this.props.finished;
         }
-        else if (this.props.winner.map(x => tied && x)) {
+        else if (this.props.winner.forEach(x => tied && x)) {
             status = 'Game is TIED';
         }
         else {
             status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
         }
+
+        const oneBoard = (x) => (
+            <div className={`game-board-${this.props.winner[x]} game-board-${this.props.currentSector === x ? 'current' : ''}`}>
+                <Board
+                    squares={currentSquaresSet[x]}
+                    onClick={this.props.handleClick}
+                    quadrant={x}
+                />
+            </div>
+        );
+
+        const oneColumn = (x) => (
+            <div key ={x} className='game-layout'>
+                {oneBoard(x)}
+                {oneBoard(x + 3)}
+                {oneBoard(x + 6)}
+            </div>
+        );
+
+        for (let x = 0; x < 3; x++) {
+            columns.push(oneColumn(x));
+        }
+
         return (
             <div className='game'>
-                <div className='game-layout'>
-                    <div className={`game-board-${this.props.winner[0]} game-board-${this.props.currentSector === 0 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[0]}
-                            onClick={this.props.handleClick}
-                            quadrant={0}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[3]} game-board-${this.props.currentSector === 3 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[3]}
-                            onClick={this.props.handleClick}
-                            quadrant={3}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[6]} game-board-${this.props.currentSector === 6 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[6]}
-                            onClick={this.props.handleClick}
-                            quadrant={6}
-                        />
-                    </div>
-                </div>
-                <div className='game-layout'>
-                    <div className={`game-board-${this.props.winner[1]} game-board-${this.props.currentSector === 1 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[1]}
-                            onClick={this.props.handleClick}
-                            quadrant={1}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[4]} game-board-${this.props.currentSector === 4 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[4]}
-                            onClick={this.props.handleClick}
-                            quadrant={4}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[7]} game-board-${this.props.currentSector === 7 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[7]}
-                            onClick={this.props.handleClick}
-                            quadrant={7}
-                        />
-                    </div>
-                </div>
-                <div className='game-layout'>
-                    <div className={`game-board-${this.props.winner[2]} game-board-${this.props.currentSector === 2 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[2]}
-                            onClick={this.props.handleClick}
-                            quadrant={2}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[5]} game-board-${this.props.currentSector === 5 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[5]}
-                            onClick={this.props.handleClick}
-                            quadrant={5}
-                        />
-                    </div>
-                    <div className={`game-board-${this.props.winner[8]} game-board-${this.props.currentSector === 8 ? 'current' : ''}`}>
-                        <Board
-                            squares={currentSquaresSet[8]}
-                            onClick={this.props.handleClick}
-                            quadrant={8}
-                        />
-                    </div>
-                </div>
+                {columns}
                 <div className='game-info'>
                     <div>{status}</div>
                 </div>

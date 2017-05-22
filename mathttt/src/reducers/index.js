@@ -1,5 +1,5 @@
 let initialArray = Array(9);
-for (var x = 0; x < 9; x++) {
+for (let x = 0; x < 9; x++) {
     initialArray[x] = Array(9).fill('');
 }
 
@@ -18,35 +18,34 @@ const initialState = {
 
 function mark(state, action) {
     let currentSquaresSet = [...(state.history[state.stepNumber].squaresSet)];
-    let currentSquares = currentSquaresSet[action.quadrant];
+    let currentSector = currentSquaresSet[action.quadrant];
 
     const canMark = (state.currentSector !== 10 && state.currentSector !== action.quadrant);
-    if (currentSquares[action.i] || state.winner[action.quadrant] || state.finished || canMark) {
+    if (currentSector[action.i] || state.winner[action.quadrant] || state.finished || canMark) {
         return state;
     }
 
-    currentSquares[action.i] = state.xIsNext ? 'X' : 'O';
-    currentSquaresSet[action.quadrant] = currentSquares;
+    currentSector[action.i] = state.xIsNext ? 'X' : 'O';
+    currentSquaresSet[action.quadrant] = currentSector;
     const newHistory = ([...state.history]).concat({squaresSet: currentSquaresSet});
 
     const newWinner = [...state.winner];
-    newWinner[action.quadrant] = calculateWinner(currentSquares);
+    newWinner[action.quadrant] = calculateWinner(currentSector);
 
-    let newSector = action.i;
+    let nextSector = action.i;
     if (newWinner[action.i] !== '') {
-        newSector = 10;
+        nextSector = 10;
     }
 
-    let newFinished = calculateWinner(newWinner);
-
+    let isFinished = calculateWinner(newWinner);
     return {
         ...state,
         history: newHistory,
         stepNumber: state.stepNumber + 1,
         xIsNext: !state.xIsNext,
         winner: newWinner,
-        currentSector: newSector,
-        finished: newFinished
+        currentSector: nextSector,
+        finished: isFinished
     };
 }
 
@@ -64,20 +63,16 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         const validFilling = squares[a] !== '' && squares[a] !== 'T';
-        if (squares[a] && validFilling && squares[a] === squares[b] && squares[a] === squares[c]) {
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] && validFilling) {
             return squares[a];
         }
     }
 
     let filled = true;
-    for (let cs = 0; cs < squares.length; cs++ ) {
-        filled = filled && squares[cs];
-    }
-
+    squares.forEach((x) => (filled = filled && x));
     if (filled) {
         return 'T';
     }
-
     return '';
 }
 
