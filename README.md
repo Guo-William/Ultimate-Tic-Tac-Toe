@@ -9,4 +9,6 @@ Rules are as follows:
 4) Get three in a row on the bigger board to win.
 
 ![example of after first move](https://i.imgur.com/K5CZx2d.png)
+
+
 Here the highlighted blue square is where the next move must be played. If you look at where the first x landed you can see it determined where the next move had to be played.
